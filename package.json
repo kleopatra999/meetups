@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "connect": "*",
-    "bower": "0.6.x"
+    "bower": "*"
   },
   "scripts": {
     "postinstall": "./node_modules/bower/bin/bower install"
