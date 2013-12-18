@@ -67,9 +67,12 @@ function generateUrl(filter) {
             '&key=7013cc73581ac377c5372713c133';
 } 
 
-function TodoCtrl($scope, $http) {
-  $scope.meetups = [];
-  $scope.meetupIds = [];
+angular.module('meetup', ['firebase']).controller('MeetupCtrl', ['$scope', '$http', '$firebase',
+  function($scope, $http, $firebase) {
+    var ref = new Firebase('https://codeship-meetups.firebaseio.com/events');
+
+    var objects = $firebase(ref);
+    $scope.meetups = $firebase(ref);
 
     for (var i = 0; i < FILTERS.length; i++) {
       $http({
@@ -79,13 +82,12 @@ function TodoCtrl($scope, $http) {
       success(function(data, status, headers, config) {
         var res = parseResult(data);
         for (var j = 0; j < res.length; j++) {
-          if ($scope.meetupIds.indexOf(res[j].id) < 0) {
-            $scope.meetups.push(res[j]);
-            $scope.meetupIds.push(res[j].id);
-          }
+            objects[res[j].id] = res[j];
+            objects[res[j].id].$priority = res[j].time;
+            objects.$save(res[j].id);
         }
       }).
       error(function(data, status, headers, config) {
       });
     }
-}
+}]);
