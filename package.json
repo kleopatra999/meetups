@@ -8,6 +8,10 @@
     "npm": "1.2.x"
   },
   "dependencies": {
-    "connect": "*"
+    "connect": "*",
+    "bower": "0.6.x"
+  },
+  "scripts": {
+    "postinstall": "./node_modules/bower/bin/bower install"
   }
 }
