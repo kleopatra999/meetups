@@ -96,7 +96,7 @@ angular.module('meetup', ['firebase']).controller('MeetupCtrl', ['$scope', '$htt
           var res = parseResult(data);
           for (var j = 0; j < res.length; j++) {
             var id = res[j].id;
-              $scope.meetups[id] = $scope.meetups[id] || {};
+              $scope.meetups[id] = $scope.meetups[id] || {relevant: true};
               $scope.meetups[id].$priority = res[j].time;
               $scope.meetups[id].event = res[j];
               $scope.meetups.$save(id);

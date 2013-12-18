@@ -32,6 +32,13 @@
     list-style: none;
     padding: 0;
   }
+  tr:hover td {
+    background-color: white !important;
+  }
+  .meetup.irrelevant td {
+    background-color: #DDD !important;
+    opacity: 0.5;
+  }
   </style>
 </head>
 <body ng-app="meetup">
@@ -43,15 +50,17 @@
         <th>Group</th>
         <th>Date</th>
         <th>City</th>
-        <th>Limits</th>
+        <th>RSVP</th>
+        <th>Relevant</th>
       </thead>
-      <tr class="meetup" ng-repeat-start="meetup in meetups | orderByPriority">
+      <tr class="meetup" ng-repeat-start="meetup in meetups | orderByPriority | filter:{relevant:true}">
         <td><a href="{{ meetup.event.eventUrl }}" target="_blank">{{ meetup.event.name }}</a></td>
         <td><a ng-click="showComments = !showComments">{{ meetup.comments.length || 0 }} comments</a></td>
         <td>{{ meetup.event.group }}</td>
         <td>{{ meetup.event.time | date:'medium' }}</td>
         <td>{{ meetup.event.city }}</td>
         <td>{{ meetup.event.attending }}/{{ meetup.event.rsvpLimit || '∞' }}</td>
+        <td><input type="checkbox" ng-model="meetup.relevant" ng-change="meetups.$save(meetup.event.id)"></td>
       </tr>
       <tr class="comments" ng-repeat-end ng-show="showComments">
         <td colspan="4">
@@ -67,6 +76,15 @@
           </form>
         </td>
       </tr>
+      <tr class="meetup irrelevant" ng-repeat="meetup in meetups | orderByPriority | filter:{relevant:false}">
+        <!-- TODO: This is a lot of repetition. Find out how to get rid of it best. -->
+        <td><a href="{{ meetup.event.eventUrl }}" target="_blank">{{ meetup.event.name }}</a></td>
+        <td></td>
+        <td>{{ meetup.event.group }}</td>
+        <td>{{ meetup.event.time | date:'medium' }}</td>
+        <td>{{ meetup.event.city }}</td>
+        <td>{{ meetup.event.attending }}/{{ meetup.event.rsvpLimit || '∞' }}</td>
+        <td><input type="checkbox" ng-model="meetup.relevant" ng-change="meetups.$save(meetup.event.id)"></td>
     </table>
   </div>
 </body>
