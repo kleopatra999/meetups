@@ -17,7 +17,7 @@
 <body ng-app>
   <div ng-controller="TodoCtrl">
     <table class="table table-striped">
-      <tr ng-repeat="meetup in meetups" class="meetup">
+      <tr ng-repeat="meetup in meetups | orderBy:'time'" class="meetup">
         <td><a href="{{ meetup.eventUrl }}" target="_blank">{{ meetup.name }}</a></td>
         <td>{{ meetup.group }}</td>
         <td>{{ meetup.time | date:'medium' }}</td>
