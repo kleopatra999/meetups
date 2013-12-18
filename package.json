@@ -1,6 +1,7 @@
 {
   "name": "Meetups",
   "description": "Lists tech meetups close to Vienna.",
+  "author": "Matthias Steinboeck, Clemens Helm",
   "version": "0.0.1",
   "engines": {
     "node": "0.10.x",
