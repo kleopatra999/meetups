@@ -17,6 +17,21 @@
   .comment {
     /* display: none; */
   }
+  a {
+    cursor: pointer;
+  }
+  input.name {
+    width: 5%;
+    min-width: 6em;
+  }
+  input.message {
+    width: 90%;
+    max-width: 50em;
+  }
+  .comments ul {
+    list-style: none;
+    padding: 0;
+  }
   </style>
 </head>
 <body ng-app="meetup">
@@ -24,6 +39,7 @@
     <table class="table table-striped">
       <thead >
         <th>Name</th>
+        <th>Comments</th>
         <th>Group</th>
         <th>Date</th>
         <th>City</th>
@@ -31,20 +47,23 @@
       </thead>
       <tr class="meetup" ng-repeat-start="meetup in meetups | orderByPriority">
         <td><a href="{{ meetup.event.eventUrl }}" target="_blank">{{ meetup.event.name }}</a></td>
+        <td><a ng-click="showComments = !showComments">{{ meetup.comments.length || 0 }} comments</a></td>
         <td>{{ meetup.event.group }}</td>
         <td>{{ meetup.event.time | date:'medium' }}</td>
         <td>{{ meetup.event.city }}</td>
         <td>{{ meetup.event.attending }}/{{ meetup.event.rsvpLimit || '∞' }}</td>
       </tr>
-      <tr class="js-comment comment" ng-repeat-end>
+      <tr class="comments" ng-repeat-end ng-show="showComments">
         <td colspan="4">
-          <ul ng-repeat="comment in meetup.comments">
-            <li><b>{{comment.name}}:</b> {{ comment.message }}</li>
+          <ul>
+            <li ng-repeat="comment in meetup.comments"><b>{{comment.name}}:</b> {{ comment.message }}</li>
           </ul>
           <form>
-            name: <input name="name" ng-model="commentName"><br />
-            message: <input name="message" ng-model="commentMessage">
-            <button ng-click="addComment(meetup.event.id, commentName, commentMessage)">comment</button>
+            <div class="form-group">
+              <input name="name" ng-model="commentName" placeholder="Name" class="name">:
+              <input name="message" ng-model="commentMessage" placeholder="Message" class="message">
+              <button ng-click="addComment(meetup.event.id, commentName, commentMessage)" class="btn btn-primary">comment</button>
+            </div>
           </form>
         </td>
       </tr>
