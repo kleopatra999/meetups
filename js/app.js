@@ -71,23 +71,39 @@ angular.module('meetup', ['firebase']).controller('MeetupCtrl', ['$scope', '$htt
   function($scope, $http, $firebase) {
     var ref = new Firebase('https://codeship-meetups.firebaseio.com/events');
 
-    var objects = $firebase(ref);
     $scope.meetups = $firebase(ref);
-
-    for (var i = 0; i < FILTERS.length; i++) {
-      $http({
-        method: 'JSONP',
-        url: generateUrl(FILTERS[i]) + '&callback=JSON_CALLBACK'
-      }).
-      success(function(data, status, headers, config) {
-        var res = parseResult(data);
-        for (var j = 0; j < res.length; j++) {
-            objects[res[j].id] = res[j];
-            objects[res[j].id].$priority = res[j].time;
-            objects.$save(res[j].id);
-        }
-      }).
-      error(function(data, status, headers, config) {
+    
+    $scope.addComment = function(eventId, name, message) {
+      if (!eventId) return;
+      var event = $scope.meetups[eventId];
+      event.comments = event.comments || [];
+      event.comments.push({
+        'name':     name,
+        'message':  message,
+        'time':     new Date()
       });
-    }
+      $scope.meetups.$save(eventId);
+    };
+    
+    
+    $scope.meetups.$on("loaded", function() {
+      for (var i = 0; i < FILTERS.length; i++) {
+        $http({
+          method: 'JSONP',
+          url: generateUrl(FILTERS[i]) + '&callback=JSON_CALLBACK'
+        }).
+        success(function(data, status, headers, config) {
+          var res = parseResult(data);
+          for (var j = 0; j < res.length; j++) {
+            var id = res[j].id;
+              $scope.meetups[id] = $scope.meetups[id] || {};
+              $scope.meetups[id].$priority = res[j].time;
+              $scope.meetups[id].event = res[j];
+              $scope.meetups.$save(id);
+          }
+        }).
+        error(function(data, status, headers, config) {
+        });
+      }
+    });
 }]);

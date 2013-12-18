@@ -14,19 +14,41 @@
   .meetup div {
     float:left;
   }
+  .comment {
+    /* display: none; */
+  }
   </style>
 </head>
 <body ng-app="meetup">
   <div ng-controller="MeetupCtrl">
     <table class="table table-striped">
-      <tr ng-repeat="meetup in meetups | orderByPriority" class="meetup">
-        <td><a href="{{ meetup.eventUrl }}" target="_blank">{{ meetup.name }}</a></td>
-        <td>{{ meetup.group }}</td>
-        <td>{{ meetup.time | date:'medium' }}</td>
-        <td>{{ meetup.city }}</td>
-        <td>{{ meetup.attending }}/{{ meetup.rsvpLimit || '∞' }}</td>
+      <thead >
+        <th>Name</th>
+        <th>Group</th>
+        <th>Date</th>
+        <th>City</th>
+        <th>Limits</th>
+      </thead>
+      <tr class="meetup" ng-repeat-start="meetup in meetups | orderByPriority">
+        <td><a href="{{ meetup.event.eventUrl }}" target="_blank">{{ meetup.event.name }}</a></td>
+        <td>{{ meetup.event.group }}</td>
+        <td>{{ meetup.event.time | date:'medium' }}</td>
+        <td>{{ meetup.event.city }}</td>
+        <td>{{ meetup.event.attending }}/{{ meetup.event.rsvpLimit || '∞' }}</td>
       </tr>
-    </ul>
+      <tr class="js-comment comment" ng-repeat-end>
+        <td colspan="4">
+          <ul ng-repeat="comment in meetup.comments">
+            <li><b>{{comment.name}}:</b> {{ comment.message }}</li>
+          </ul>
+          <form>
+            name: <input name="name" ng-model="commentName"><br />
+            message: <input name="message" ng-model="commentMessage">
+            <button ng-click="addComment(meetup.event.id, commentName, commentMessage)">comment</button>
+          </form>
+        </td>
+      </tr>
+    </table>
   </div>
 </body>
 </html>
