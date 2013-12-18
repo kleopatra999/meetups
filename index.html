@@ -4,18 +4,27 @@
   <meta charset="UTF-8">
   <title>Meetups close to Vienna</title>
   <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-  <script type="text/javascript">
-    $.ajax({
-      url: "https://api.meetup.com/2/concierge?category_id=34&country=AT&city=Vienna&radius=300&key=7013cc73581ac377c5372713c133",
-      crossDomain: true,
-      success: function (data) {
-        console.log(data);
-      },
-      dataType: "jsonp"
-    });
-  </script>
+  <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+  <script type="text/javascript" src="js/app.js"></script>
+  <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css" media="all">
+  <style>
+  .meetup div {
+    float:left;
+  }
+  </style>
 </head>
-<body>
-  
+<body ng-app>
+  <div ng-controller="TodoCtrl">
+    <table class="table table-striped">
+      <tr ng-repeat="meetup in meetups" class="meetup">
+        <td><a href="{{ meetup.eventUrl }}" target="_blank">{{ meetup.name }}</a></td>
+        <td>{{ meetup.group }}</td>
+        <td>{{ meetup.time | date:'medium' }}</td>
+        <td>{{ meetup.city }}</td>
+        <td>{{ meetup.attending }}/{{ meetup.rsvpLimit || '∞' }}</td>
+      </li>
+    </ul>
+  </div>
 </body>
 </html>
