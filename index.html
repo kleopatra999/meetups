@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <title>Meetups close to Vienna</title>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+  <script type="text/javascript">
+    $.ajax({
+      url: "https://api.meetup.com/2/concierge?category_id=34&country=AT&city=Vienna&radius=300&key=7013cc73581ac377c5372713c133",
+      crossDomain: true,
+      success: function (data) {
+        console.log(data);
+      },
+      dataType: "jsonp"
+    });
+  </script>
+</head>
+<body>
+  
+</body>
+</html>
