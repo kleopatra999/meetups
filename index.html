@@ -53,38 +53,9 @@
         <th>RSVP</th>
         <th>Relevant</th>
       </thead>
-      <tr class="meetup" ng-repeat-start="meetup in meetups | orderByPriority | filter:{relevant:true}">
-        <td><a href="{{ meetup.event.eventUrl }}" target="_blank">{{ meetup.event.name }}</a></td>
-        <td><a ng-click="showComments = !showComments">{{ meetup.comments.length || 0 }} comments</a></td>
-        <td>{{ meetup.event.group }}</td>
-        <td>{{ meetup.event.time | date:'medium' }}</td>
-        <td>{{ meetup.event.city }}</td>
-        <td>{{ meetup.event.attending }}/{{ meetup.event.rsvpLimit || '∞' }}</td>
-        <td><input type="checkbox" ng-model="meetup.relevant" ng-change="meetups.$save(meetup.event.id)"></td>
-      </tr>
-      <tr class="comments" ng-repeat-end ng-show="showComments">
-        <td colspan="4">
-          <ul>
-            <li ng-repeat="comment in meetup.comments"><b>{{comment.name}}:</b> {{ comment.message }}</li>
-          </ul>
-          <form>
-            <div class="form-group">
-              <input name="name" ng-model="commentName" placeholder="Name" class="name">:
-              <input name="message" ng-model="commentMessage" placeholder="Message" class="message">
-              <button ng-click="addComment(meetup.event.id, commentName, commentMessage)" class="btn btn-primary">comment</button>
-            </div>
-          </form>
-        </td>
-      </tr>
-      <tr class="meetup irrelevant" ng-repeat="meetup in meetups | orderByPriority | filter:{relevant:false}">
-        <!-- TODO: This is a lot of repetition. Find out how to get rid of it best. -->
-        <td><a href="{{ meetup.event.eventUrl }}" target="_blank">{{ meetup.event.name }}</a></td>
-        <td></td>
-        <td>{{ meetup.event.group }}</td>
-        <td>{{ meetup.event.time | date:'medium' }}</td>
-        <td>{{ meetup.event.city }}</td>
-        <td>{{ meetup.event.attending }}/{{ meetup.event.rsvpLimit || '∞' }}</td>
-        <td><input type="checkbox" ng-model="meetup.relevant" ng-change="meetups.$save(meetup.event.id)"></td>
+      <tr class="meetup" ng-repeat-start="meetup in meetups | orderByPriority | filter:{relevant:true}"></tr>
+      <tr class="comments" ng-repeat-end ng-show="showComments"></tr>
+      <tr class="meetup irrelevant" ng-repeat="meetup in meetups | orderByPriority | filter:{relevant:false}"></tr>
     </table>
   </div>
 </body>
