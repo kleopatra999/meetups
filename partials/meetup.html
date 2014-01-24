@@ -1,0 +1,8 @@
+<td><a href="{{ meetup.event.eventUrl }}" target="_blank">{{ meetup.event.name }}</a></td>
+<td><a ng-click="showComments = !showComments">{{ meetup.comments.length || 0 }} comments</a></td>
+<td>{{ meetup.event.group }}</td>
+<td>{{ meetup.event.time | date:'medium' }}</td>
+<td>{{ meetup.event.city }}</td>
+<td>{{ meetup.event.attending }}/{{ meetup.event.rsvpLimit || '∞' }}</td>
+<td><input type="checkbox" ng-model="meetup.relevant" ng-change="meetups.$save(meetup.event.id)"></td>
+
