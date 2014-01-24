@@ -59,32 +59,14 @@ angular
     ->
       restrict: 'EAC'
       replace: false
-      template: """
-        <td><a href="{{ meetup.event.eventUrl }}" target="_blank">{{ meetup.event.name }}</a></td>
-        <td><a ng-click="showComments = !showComments">{{ meetup.comments.length || 0 }} comments</a></td>
-        <td>{{ meetup.event.group }}</td>
-        <td>{{ meetup.event.time | date:'medium' }}</td>
-        <td>{{ meetup.event.city }}</td>
-        <td>{{ meetup.event.attending }}/{{ meetup.event.rsvpLimit || '∞' }}</td>
-        <td><input type="checkbox" ng-model="meetup.relevant" ng-change="meetups.$save(meetup.event.id)"></td>
-      """
-      scope: true
+      templateUrl: '/partials/meetup.html'
+      scope: false
   ])
+
   .directive('comments', [
     ->
       restrict: 'EAC'
       replace: false
-      template: """
-      """
-        <td colspan="7">
-          <ul>
-            <li ng-repeat="comment in meetup.comments"><b>{{comment.name}}:</b> {{ comment.message }}</li>
-          </ul>
-          <form>
-            <div class="form-group">
-              <input name="name" ng-model="commentName" placeholder="Name" class="name">:
-              <input name="message" ng-model="commentMessage" placeholder="Message" class="message">
-              <button ng-click="addComment(meetup.event.id, commentName, commentMessage)" class="btn btn-primary">comment</button>
-            </div>
-          </form>
-        </td>
+      templateUrl: '/partials/comments.html'
+      scope: false
+  ])

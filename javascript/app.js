@@ -104,6 +104,24 @@
         return eachCity(fetchEvents);
       });
     }
+  ]).directive('meetup', [
+    function() {
+      return {
+        restrict: 'EAC',
+        replace: false,
+        templateUrl: '/partials/meetup.html',
+        scope: false
+      };
+    }
+  ]).directive('comments', [
+    function() {
+      return {
+        restrict: 'EAC',
+        replace: false,
+        templateUrl: '/partials/comments.html',
+        scope: false
+      };
+    }
   ]);
 
 }).call(this);
