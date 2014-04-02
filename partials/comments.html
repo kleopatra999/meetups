@@ -1,0 +1,12 @@
+<td colspan="7">
+  <ul>
+    <li ng-repeat="comment in meetup.comments"><b>{{comment.name}}:</b> {{ comment.message }}</li>
+  </ul>
+  <form>
+    <div class="form-group">
+      <input name="name" ng-model="commentName" placeholder="Name" class="name">:
+      <input name="message" ng-model="commentMessage" placeholder="Message" class="message">
+      <button ng-click="addComment(meetup.event.id, commentName, commentMessage)" class="btn btn-primary">comment</button>
+    </div>
+  </form>
+</td>
